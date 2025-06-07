@@ -28,50 +28,205 @@ function Login() {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px' }}>
-      <h2>Login</h2>
-      {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', marginBottom: '5px' }}>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={{ width: '100%', padding: '8px' }}
-            required
-          />
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      background: 'linear-gradient(135deg, #2E5CFF 0%, #1E3A8A 100%)',
+      fontFamily: 'Arial, sans-serif'
+    }}>
+      {/* Left Side - Branding */}
+      <div style={{
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: 'white',
+        padding: '40px',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        {/* Decorative circles */}
+        <div style={{
+          position: 'absolute',
+          top: '-50px',
+          right: '-50px',
+          width: '200px',
+          height: '200px',
+          backgroundColor: 'rgba(255, 255, 255, 0.1)',
+          borderRadius: '50%'
+        }}></div>
+        <div style={{
+          position: 'absolute',
+          bottom: '-100px',
+          left: '-100px',
+          width: '300px',
+          height: '300px',
+          backgroundColor: 'rgba(255, 255, 255, 0.05)',
+          borderRadius: '50%'
+        }}></div>
+        
+        <div style={{ textAlign: 'center', zIndex: 2 }}>
+          <h1 style={{
+            fontSize: '3.5rem',
+            fontWeight: 'bold',
+            margin: '0 0 10px 0',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '10px'
+          }}>
+            PingMe 
+            <span style={{ fontSize: '2.5rem' }}>🔔</span>
+          </h1>
+          <p style={{
+            fontSize: '1.2rem',
+            margin: '0',
+            opacity: 0.9
+          }}>
+            Uni Notification hub
+          </p>
         </div>
-        <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', marginBottom: '5px' }}>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={{ width: '100%', padding: '8px' }}
-            required
-          />
+      </div>
+
+      {/* Right Side - Login Form */}
+      <div style={{
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#f8f9fa',
+        padding: '40px'
+      }}>
+        <div style={{
+          width: '100%',
+          maxWidth: '400px',
+          backgroundColor: 'white',
+          padding: '40px',
+          borderRadius: '12px',
+          boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)'
+        }}>
+          <div style={{ marginBottom: '30px' }}>
+            <h2 style={{
+              color: '#2E5CFF',
+              fontSize: '1.8rem',
+              fontWeight: 'bold',
+              margin: '0 0 8px 0'
+            }}>
+              Pingg..
+            </h2>
+            <p style={{
+              color: '#6B7280',
+              fontSize: '0.95rem',
+              margin: '0'
+            }}>
+              Login to get started
+            </p>
+          </div>
+
+          {error && (
+            <div style={{
+              color: '#DC2626',
+              backgroundColor: '#FEF2F2',
+              padding: '12px',
+              borderRadius: '8px',
+              marginBottom: '20px',
+              fontSize: '0.9rem',
+              border: '1px solid #FECACA'
+            }}>
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit}>
+            <div style={{ marginBottom: '20px' }}>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email address"
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  border: '1px solid #D1D5DB',
+                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  outline: 'none',
+                  transition: 'border-color 0.2s',
+                  boxSizing: 'border-box'
+                }}
+                onFocus={(e) => e.target.style.borderColor = '#2E5CFF'}
+                onBlur={(e) => e.target.style.borderColor = '#D1D5DB'}
+                required
+              />
+            </div>
+
+            <div style={{ marginBottom: '20px' }}>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  border: '1px solid #D1D5DB',
+                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  outline: 'none',
+                  transition: 'border-color 0.2s',
+                  boxSizing: 'border-box'
+                }}
+                onFocus={(e) => e.target.style.borderColor = '#2E5CFF'}
+                onBlur={(e) => e.target.style.borderColor = '#D1D5DB'}
+                required
+              />
+            </div>
+
+            <button 
+              type="submit"
+              style={{
+                width: '100%',
+                padding: '12px',
+                backgroundColor: '#2E5CFF',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                fontSize: '1rem',
+                fontWeight: '500',
+                cursor: 'pointer',
+                transition: 'background-color 0.2s',
+                marginBottom: '20px'
+              }}
+              onMouseOver={(e) => e.target.style.backgroundColor = '#1E40AF'}
+              onMouseOut={(e) => e.target.style.backgroundColor = '#2E5CFF'}
+            >
+              Login
+            </button>
+
+            <div style={{ 
+              textAlign: 'center',
+              fontSize: '0.9rem',
+              color: '#6B7280'
+            }}>
+              Don't have an account?{' '}
+              <Link 
+                to="/register" 
+                style={{ 
+                  color: '#2E5CFF',
+                  textDecoration: 'none',
+                  fontWeight: '500'
+                }}
+              >
+                Register here
+              </Link>
+            </div>
+          </form>
         </div>
-        <button 
-          type="submit"
-          style={{
-            width: '100%',
-            padding: '10px',
-            backgroundColor: '#007bff',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer'
-          }}
-        >
-          Login
-        </button>
-        <div style={{ marginTop: '15px', textAlign: 'center' }}>
-          Don't have an account? <Link to="/register" style={{ color: '#007bff' }}>Register here</Link>
-        </div>
-      </form>
+      </div>
     </div>
   );
 }
 
-export default Login; 
+export default Login;
