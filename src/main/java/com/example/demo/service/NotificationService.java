@@ -28,11 +28,8 @@ public class NotificationService {
     
     public void sendNotificationToAllUsers(Event event) {
         List<User> users = userRepository.findAll();
-        System.out.println("Found " + users.size() + " users to notify"); // Debug log
         
         for (User user : users) {
-            System.out.println("Sending notification to user: " + user.getEmail()); // Debug log
-            
             // Create notification record
             Notification notification = new Notification(
                 user,
@@ -56,13 +53,7 @@ public class NotificationService {
                 event.getDescription()
             );
             
-            try {
-                emailService.sendEmail(user.getEmail(), subject, content);
-                System.out.println("Email sent successfully to: " + user.getEmail()); // Debug log
-            } catch (Exception e) {
-                System.out.println("Failed to send email to: " + user.getEmail() + " Error: " + e.getMessage()); // Debug log
-                e.printStackTrace();
-            }
+            emailService.sendEmail(user.getEmail(), subject, content);
         }
     }
 } 

@@ -40,11 +40,6 @@ public class EventController {
         return ResponseEntity.ok(events);
     }
 
-    @GetMapping("/hello")
-    public ResponseEntity<String> sayHello() {
-        return ResponseEntity.ok("Hello,secured world") ; 
-    }
-
     @GetMapping("/today")
     public ResponseEntity<List<Event>> getTodayEvents() {
         LocalDateTime startOfDay = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0);
@@ -64,11 +59,9 @@ public class EventController {
     @PreAuthorize("hasAnyRole('FACULTY', 'ADMIN')")
     public ResponseEntity<?> createEvent(@RequestBody EventRequest request, Authentication auth) {
         try {
-            // Get the current user
             User user = userRepository.findByEmail(auth.getName())
                     .orElseThrow(() -> new RuntimeException("User not found"));
 
-            // Create event
             Event event = new Event();
             event.setTitle(request.getTitle());
             event.setDescription(request.getDescription());
@@ -78,14 +71,12 @@ public class EventController {
             event.setClassroom(request.getClassroom());
             event.setCreatedBy(user);
 
-            // Save event
             Event savedEvent = eventRepository.save(event);
             notificationService.sendNotificationToAllUsers(savedEvent);
 
             return ResponseEntity.ok(savedEvent);
             
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.badRequest().body("Failed to create event.");
         }
     }
@@ -97,7 +88,6 @@ public class EventController {
             Event event = eventRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Event not found"));
 
-            // Update event
             event.setTitle(request.getTitle());
             event.setDescription(request.getDescription());
             event.setType(Event.EventType.valueOf(request.getType()));
@@ -106,14 +96,9 @@ public class EventController {
             event.setClassroom(request.getClassroom());
 
             Event updatedEvent = eventRepository.save(event);
-
-            // Send update notifications
-            // notificationService.sendNotificationToAllUsers(updatedEvent);
-
             return ResponseEntity.ok(updatedEvent);
             
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.badRequest().body("Failed to update event.");
         }
     }
@@ -124,15 +109,11 @@ public class EventController {
         try {
             Event event = eventRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Event not found"));
-
-            // Soft delete
             event.setActive(false);
             eventRepository.save(event);
-
             return ResponseEntity.ok("Event deleted successfully");
             
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.badRequest().body("Failed to delete event.");
         }
     }
