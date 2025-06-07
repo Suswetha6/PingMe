@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "events")
@@ -27,6 +28,7 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name = "created_by")
+    @JsonBackReference
     private User createdBy;
 
     @Column(nullable = false)

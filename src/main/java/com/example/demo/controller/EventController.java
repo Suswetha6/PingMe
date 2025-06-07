@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.EventRequest ; 
+import com.example.demo.dto.EventRequest;
 import com.example.demo.entity.Event;
 import com.example.demo.entity.User;
 import com.example.demo.repository.EventRepository;
@@ -21,14 +21,18 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class EventController {
 
-    @Autowired
-    private EventRepository eventRepository;
+    private final EventRepository eventRepository;
+    private final UserRepository userRepository;
+    private final NotificationService notificationService;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private NotificationService notificationService;
+    public EventController(EventRepository eventRepository,
+                         UserRepository userRepository,
+                         NotificationService notificationService) {
+        this.eventRepository = eventRepository;
+        this.userRepository = userRepository;
+        this.notificationService = notificationService;
+    }
 
     @GetMapping
     public ResponseEntity<List<Event>> getAllEvents() {
@@ -76,9 +80,7 @@ public class EventController {
 
             // Save event
             Event savedEvent = eventRepository.save(event);
-
-            // Send notifications asynchronously
-            // notificationService.sendNotificationToAllUsers(savedEvent);
+            notificationService.sendNotificationToAllUsers(savedEvent);
 
             return ResponseEntity.ok(savedEvent);
             
@@ -117,7 +119,7 @@ public class EventController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('FACULTY', 'ADMIN') or @eventSecurity.isOwner(#id, authentication.name)")
+    @PreAuthorize("hasAnyRole('ADMIN') or @eventSecurity.isOwner(#id, authentication.name)")
     public ResponseEntity<?> deleteEvent(@PathVariable Long id, Authentication auth) {
         try {
             Event event = eventRepository.findById(id)

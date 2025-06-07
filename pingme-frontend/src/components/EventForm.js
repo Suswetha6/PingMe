@@ -115,7 +115,7 @@ function EventForm() {
             required
           />
         </div>
-        <button
+        <button 
           type="submit"
           style={{
             width: '100%',

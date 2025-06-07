@@ -54,8 +54,8 @@ function Navbar() {
           ) : (
             <div>
               <Link to="/login" style={{ color: 'white', textDecoration: 'none', marginRight: '15px' }}>
-                Login
-              </Link>
+              Login
+            </Link>
               <Link to="/register" style={{ color: 'white', textDecoration: 'none' }}>
                 Register
               </Link>
