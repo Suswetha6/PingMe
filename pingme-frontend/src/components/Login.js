@@ -11,18 +11,25 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log('Attempting login with:', { email });
       const response = await axios.post('http://localhost:8080/api/auth/login', {
         email,
         password
       });
 
+      console.log('Login response:', response.data);
+
       // Store the token and role in localStorage
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('userRole', response.data.role);
       
+      console.log('Stored token:', localStorage.getItem('token'));
+      console.log('Stored role:', localStorage.getItem('userRole'));
+      
       // Redirect to home page
       navigate('/');
     } catch (err) {
+      console.error('Login error:', err);
       setError(err.response?.data?.message || 'Login failed');
     }
   };

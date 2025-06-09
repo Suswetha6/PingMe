@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @RestController
 @RequestMapping("/api/events")
@@ -42,8 +44,9 @@ public class EventController {
 
     @GetMapping("/today")
     public ResponseEntity<List<Event>> getTodayEvents() {
-        LocalDateTime startOfDay = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0);
-        LocalDateTime endOfDay = LocalDateTime.now().withHour(23).withMinute(59).withSecond(59);
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Kolkata"));
+        LocalDateTime startOfDay = now.withHour(0).withMinute(0).withSecond(0).toLocalDateTime();
+        LocalDateTime endOfDay = now.withHour(23).withMinute(59).withSecond(59).toLocalDateTime();
         
         List<Event> events = eventRepository.findActiveEventsBetweenDates(startOfDay, endOfDay);
         return ResponseEntity.ok(events);

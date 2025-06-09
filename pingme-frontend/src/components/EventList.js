@@ -21,7 +21,6 @@ function EventList() {
         setIsLoading(false);
       }
     };
-
     fetchEvents();
   }, []);
 
@@ -84,7 +83,7 @@ function EventList() {
           textAlign: 'center'
         }}>
           <h3 style={{ color: '#DC2626', margin: '0 0 8px 0' }}>Error Loading Events</h3>
-          <p style={{ color: '#7F1D1D', margin: '0' }}>{error}</p>
+          <p style={{ color: '#7F1D1D', margin: '0 0 16px 0' }}>{error}</p>
         </div>
       </div>
     );
@@ -114,7 +113,6 @@ function EventList() {
           backgroundColor: 'rgba(255, 255, 255, 0.1)',
           borderRadius: '50%'
         }}></div>
-        
         <div style={{
           maxWidth: '1200px',
           margin: '0 auto',
@@ -171,7 +169,7 @@ function EventList() {
             <p style={{
               color: '#6B7280',
               fontSize: '1.1rem',
-              margin: '0'
+              margin: '0 0 20px 0'
             }}>
               Looks like you have a free day! Check back tomorrow for new events.
             </p>
