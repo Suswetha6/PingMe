@@ -6,11 +6,11 @@ services:
     buildCommand: ./gradlew build
     envVars:
       - key: SPRING_DATASOURCE_URL
-        value: ${RENDER_POSTGRESQL_URL}
+        value: ${SPRING_DATASOURCE_URL}
       - key: SPRING_DATASOURCE_USERNAME
-        value: ${RENDER_POSTGRESQL_USERNAME}
+        value: ${SPRING_DATASOURCE_USERNAME}
       - key: SPRING_DATASOURCE_PASSWORD
-        value: ${RENDER_POSTGRESQL_PASSWORD}
+        value: ${SPRING_DATASOURCE_PASSWORD}
     plan: free
 
   - name: frontend
