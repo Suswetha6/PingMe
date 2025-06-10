@@ -6,19 +6,19 @@ services:
     buildCommand: ./gradlew build
     envVars:
       - key: SPRING_DATASOURCE_URL
-        value: ${SPRING_DATASOURCE_URL}
+        value: $SPRING_DATASOURCE_URL
       - key: SPRING_DATASOURCE_USERNAME
-        value: ${SPRING_DATASOURCE_USERNAME}
+        value: $SPRING_DATASOURCE_USERNAME
       - key: SPRING_DATASOURCE_PASSWORD
-        value: ${SPRING_DATASOURCE_PASSWORD}
+        value: $SPRING_DATASOURCE_PASSWORD
       - key: JWT_SECRET
-        value: ${JWT_SECRET}
+        value: $JWT_SECRET
       - key: JWT_EXPIRATION
-        value: ${JWT_EXPIRATION}
+        value: $JWT_EXPIRATION
       - key: SENDGRID_API_KEY
-        value: ${SENDGRID_API_KEY}
+        value: $SENDGRID_API_KEY
       - key: SENDGRID_FROM_EMAIL
-        value: ${SENDGRID_FROM_EMAIL}
+        value: $SENDGRID_FROM_EMAIL
     plan: free
 
   - name: frontend
