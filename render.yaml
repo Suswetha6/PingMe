@@ -1,0 +1,34 @@
+services:
+  - name: postgres
+    type: database
+    databaseName: pingme
+    plan: free
+    postgresVersion: 13
+    user: postgres
+    password: ${POSTGRES_PASSWORD}
+
+  - name: backend
+    type: web
+    env: docker
+    dockerfilePath: Dockerfile.backend
+    buildCommand: ./gradlew build
+    startCommand: java -jar build/libs/*.jar
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://postgres:5432/pingme
+      - key: SPRING_DATASOURCE_USERNAME
+        value: postgres
+      - key: SPRING_DATASOURCE_PASSWORD
+        value: ${POSTGRES_PASSWORD}
+    plan: free
+
+  - name: frontend
+    type: web
+    env: docker
+    dockerfilePath: pingme-frontend/Dockerfile
+    buildCommand: npm install && npm run build
+    startCommand: nginx -g "daemon off;"
+    envVars:
+      - key: REACT_APP_API_BASE_URL
+        value: https://backend.onrender.com
+    plan: free
