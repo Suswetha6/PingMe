@@ -1,12 +1,4 @@
 services:
-  - name: postgres
-    type: postgres 
-    databaseName: pingme
-    plan: free
-    postgresVersion: 13
-    user: postgres
-    password: ${POSTGRES_PASSWORD}
-
   - name: backend
     type: web
     env: docker
@@ -32,3 +24,11 @@ services:
       - key: REACT_APP_API_BASE_URL
         value: https://backend.onrender.com
     plan: free
+
+databases:
+  - name: postgres
+    databaseName: pingme
+    plan: free
+    postgresVersion: 13
+    user: postgres
+    password: ${POSTGRES_PASSWORD}
