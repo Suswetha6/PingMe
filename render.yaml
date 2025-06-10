@@ -1,6 +1,6 @@
 services:
   - name: postgres
-    type: database
+    type: postgres 
     databaseName: pingme
     plan: free
     postgresVersion: 13
