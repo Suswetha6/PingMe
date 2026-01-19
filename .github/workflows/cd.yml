@@ -11,18 +11,21 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: Setup kubectl
-        uses: azure/setup-kubectl@v3
-        with:
-          version: 'v1.29.0'
-
-      - name: Configure kubeconfig
+      # Install Kind
+      - name: Install Kind
         run: |
-          echo "${{ secrets.KUBECONFIG_B64 }}" | base64 -d > kubeconfig
-          export KUBECONFIG=$PWD/kubeconfig
+          curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64
+          chmod +x ./kind
+          sudo mv ./kind /usr/local/bin/kind
+
+      # Create Kubernetes cluster INSIDE runner
+      - name: Create Kind cluster
+        run: kind create cluster --name pingme
+
+      - name: Verify cluster
+        run: kubectl get nodes
 
       - name: Deploy to Kubernetes
         run: |
-          kubectl apply --validate=false -f k8s/
+          kubectl apply -f k8s/
           kubectl rollout status deployment/pingme-backend
-
