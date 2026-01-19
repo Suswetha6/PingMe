@@ -24,7 +24,7 @@ jobs:
         run: mvn clean package -DskipTests -Dcheckstyle.skip=true
 
       - name: Run unit tests
-        run: mvn test -Dspring.profiles.active=test
+        run: mvn test -Dspring.profiles.active=test -DskipITs
 
 
       - name: Checkstyle Report (Non-blocking)
