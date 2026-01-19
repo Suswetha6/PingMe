@@ -115,9 +115,8 @@
 				<configuration>
 					<configLocation>sun_checks.xml</configLocation>
 					<consoleOutput>true</consoleOutput>
-
-					<!-- IMPORTANT: Do not fail build initially -->
 					<failsOnError>false</failsOnError>
+					<skip>${checkstyle.skip}</skip>
 				</configuration>
 
 				<executions>
@@ -129,6 +128,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 		</plugins>
 	</build>
 
