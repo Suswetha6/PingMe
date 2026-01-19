@@ -11,32 +11,21 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      # Install Kind
       - name: Install Kind
         run: |
           curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64
           chmod +x ./kind
           sudo mv ./kind /usr/local/bin/kind
 
-      # Create Kubernetes cluster INSIDE runner
       - name: Create Kind cluster
         run: kind create cluster --name pingme
 
-      # Verify cluster
       - name: Verify cluster
         run: kubectl get nodes
 
-      # Define image name 
-      - name: Set image name
-        run: |
-          IMAGE_NAME=$(echo "${{ github.repository_owner }}/pingme-backend:ci" | tr '[:upper:]' '[:lower:]')
-          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
+      - name: Login to DockerHub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
-      # Load image into Kind
-      - name: Load Docker image into Kind
-        run: kind load docker-image $IMAGE_NAME --name pingme
-
-      # Deploy to Kubernetes
       - name: Deploy to Kubernetes
         run: |
           kubectl apply -f k8s/
