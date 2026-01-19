@@ -3,6 +3,8 @@ name: PingMe CI Pipeline
 on:
   push:
     branches: [ "master" ]
+    paths-ignore:
+      - '.github/workflows/cd.yml'
   workflow_dispatch:
 
 permissions:

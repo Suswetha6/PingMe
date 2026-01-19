@@ -18,6 +18,11 @@ jobs:
           chmod +x ./kind
           sudo mv ./kind /usr/local/bin/kind
 
+      - name: Load Docker image into Kind
+        run: |
+          kind load docker-image $IMAGE_NAME --name pingme
+
+
       # Create Kubernetes cluster INSIDE runner
       - name: Create Kind cluster
         run: kind create cluster --name pingme
@@ -28,4 +33,4 @@ jobs:
       - name: Deploy to Kubernetes
         run: |
           kubectl apply -f k8s/
-          kubectl rollout status deployment/pingme-backend
+          kubectl rollout status deployment/pingme-backend --timeout=120s
