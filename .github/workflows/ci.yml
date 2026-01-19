@@ -19,21 +19,24 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
           cache: maven
-      
-      - name: Build backend (no tests)
-        run: mvn clean package -DskipTests -Dcheckstyle.skip=true
-
-      - name: Run unit tests
-        run: mvn test -Dcheckstyle.skip=true -DskipITs
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
           languages: java
 
+      - name: Autobuild for CodeQL
+        uses: github/codeql-action/autobuild@v3
+
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
-        
+
+      - name: Build backend (no tests)
+        run: mvn clean package -DskipTests -Dcheckstyle.skip=true
+
+      - name: Run unit tests
+        run: mvn test -Dcheckstyle.skip=true -DskipITs
+
       - name: Checkstyle Report (Non-blocking)
         run: mvn checkstyle:check || true
 
