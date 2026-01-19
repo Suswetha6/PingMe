@@ -80,12 +80,10 @@ jobs:
       
       - name: Run container smoke test
         run: |
-          docker run -d -p 8080:8080 --name pingme-test \
-            ${{ secrets.DOCKERHUB_USERNAME }}/pingme-backend:ci
+          docker run -d -p 8080:8080 --name pingme-test $IMAGE_NAME
           sleep 15
           curl -f http://localhost:8080 || true
           docker stop pingme-test
-
 
       #  DockerHub Login
       - name: Login to DockerHub
