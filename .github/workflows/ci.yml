@@ -58,13 +58,9 @@ jobs:
       - name: Run unit tests
         run: mvn test -Dcheckstyle.skip=true -DskipITs
 
-      #  Docker Build
       - name: Build Docker image
-        run: |
-          docker build \
-            -f Dockerfile.backend \
-            -t ${{ secrets.DOCKERHUB_USERNAME }}/pingme-backend:ci \
-            .
+        run: docker build -f Dockerfile.backend -t ${{ secrets.DOCKERHUB_USERNAME }}/pingme-backend:ci .
+
 
       # 🔍 Container Image Scan (Trivy)
       - name: Scan Docker image with Trivy
