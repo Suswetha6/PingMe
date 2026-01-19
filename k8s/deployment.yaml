@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pingme-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pingme-backend
+  template:
+    metadata:
+      labels:
+        app: pingme-backend
+    spec:
+      containers:
+        - name: pingme-backend
+          image: YOUR_DOCKERHUB_USERNAME/pingme-backend:ci
+          ports:
+            - containerPort: 8080
