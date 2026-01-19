@@ -12,6 +12,8 @@ spec:
       labels:
         app: pingme-backend
     spec:
+      imagePullSecrets:
+        - name: dockerhub-secret
       containers:
         - name: pingme-backend
           image: YOUR_DOCKERHUB_USERNAME/pingme-backend:ci
