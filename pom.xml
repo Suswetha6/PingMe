@@ -128,6 +128,25 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.2.5</version>
+
+				<configuration>
+					<!-- Only run true unit tests -->
+					<includes>
+						<include>**/*Test.java</include>
+					</includes>
+
+					<!-- Explicitly exclude Spring context tests -->
+					<excludes>
+						<exclude>**/*ApplicationTests.java</exclude>
+						<exclude>**/*IT.java</exclude>
+						<exclude>**/*IntegrationTest.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
 
 		</plugins>
 	</build>
