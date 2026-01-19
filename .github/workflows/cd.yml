@@ -18,18 +18,25 @@ jobs:
           chmod +x ./kind
           sudo mv ./kind /usr/local/bin/kind
 
-      - name: Load Docker image into Kind
-        run: |
-          kind load docker-image $IMAGE_NAME --name pingme
-
-
       # Create Kubernetes cluster INSIDE runner
       - name: Create Kind cluster
         run: kind create cluster --name pingme
 
+      # Verify cluster
       - name: Verify cluster
         run: kubectl get nodes
 
+      # Define image name 
+      - name: Set image name
+        run: |
+          IMAGE_NAME=$(echo "${{ github.repository_owner }}/pingme-backend:ci" | tr '[:upper:]' '[:lower:]')
+          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
+
+      # Load image into Kind
+      - name: Load Docker image into Kind
+        run: kind load docker-image $IMAGE_NAME --name pingme
+
+      # Deploy to Kubernetes
       - name: Deploy to Kubernetes
         run: |
           kubectl apply -f k8s/
