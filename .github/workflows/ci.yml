@@ -49,6 +49,7 @@ jobs:
         with:
           name: dependency-check-report
           path: dependency-check-report
+        continue-on-error: true
 
       - name: Build backend (no tests)
         run: mvn clean package -DskipTests -Dcheckstyle.skip=true
