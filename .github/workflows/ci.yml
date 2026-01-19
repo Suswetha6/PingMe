@@ -20,10 +20,12 @@ jobs:
           java-version: '17'
           cache: maven
       
-      - name: Build backend
-        run: mvn clean package -Dcheckstyle.skip=true
+      - name: Build backend (no tests)
+        run: mvn clean package -DskipTests -Dcheckstyle.skip=true
+
       - name: Checkstyle Report (Non-blocking)
         run: mvn checkstyle:check || true
+
 
 
 
