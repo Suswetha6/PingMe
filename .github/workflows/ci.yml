@@ -59,7 +59,13 @@ jobs:
         run: mvn test -Dcheckstyle.skip=true -DskipITs
 
       - name: Build Docker image
-        run: docker build -f Dockerfile.backend -t ${{ secrets.DOCKERHUB_USERNAME }}/pingme-backend:ci .
+        run: |
+          docker buildx build \
+            --load \
+            -f Dockerfile.backend \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/pingme-backend:ci \
+            .
+
 
 
       # 🔍 Container Image Scan (Trivy)
