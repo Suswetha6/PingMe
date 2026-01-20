@@ -93,5 +93,67 @@ docker compose exec postgres pg_dump -U your_postgres_user pingme > backup.sql
 cat backup.sql | docker compose exec -T postgres psql -U your_postgres_user -d pingme
 ```
 
+## CI Pipeline Overview
+
+The CI pipeline (ci.yml) is triggered on every push to master.
+
+### CI Stages
+
+- Build & package application
+- Unit tests (hard gate)
+- Linting (Checkstyle – non-blocking)
+- SAST using CodeQL
+- SCA using Dependency Check
+- Docker image build
+- Container vulnerability scan (Trivy)
+- Runtime smoke test
+- Push trusted image to DockerHub
+
+### Purpose:
+
+CI creates a trusted Docker image by enforcing quality and security checks.
+
+## CD Pipeline Overview
+
+The CD pipeline (cd.yml) is triggered manually.
+
+### CD Stages
+
+- Provision Kubernetes cluster using Kind
+- Deploy trusted Docker image
+- Attempt rollout verification (non-blocking)
+- Optional dummy DAST
+
+### Purpose:
+CD deploys only trusted artifacts produced by CI.
+
+### How to Run CD
+
+- Go to `GitHub → Actions`
+- Select PingMe CD Pipeline
+- Click Run workflow
+
+## Secrets Configuration (Mandatory)
+
+The following GitHub repository secrets must be configured:
+
+| Secret Name            | Purpose                  |
+|------------------------|--------------------------|
+| `DOCKERHUB_USERNAME`   | DockerHub username       |
+| `DOCKERHUB_TOKEN`      | DockerHub access token   |
 
 
+Configured at:
+<code>
+GitHub → Settings → Secrets → Actions
+</code>
+
+Secrets are never hardcoded in code or workflows.
+
+## CI/CD Design Philosophy
+
+- Shift-left security through early SAST and SCA
+- Defense-in-depth with container scanning
+- Clear CI/CD separation
+- Pipeline-as-code
+- Demo-safe non-blocking gates for legacy constraints
